@@ -2,7 +2,7 @@
 // Project: simpleRunner 
 // Created: 2020-10-07
 // Author: Michael Tang
-// Modified: 2020-10-07
+// Modified: 2020-10-08
 
 // show all errors
 SetErrorMode(2)
@@ -70,7 +70,7 @@ SetSpritePosition(1, playerX, playerY)
 CreateSprite(2, 1)
 SetSpriteSize(2, Random(GetVirtualWidth() / 32, GetVirtualWidth() / 4), Random(GetVirtualHeight() / 16, GetVirtualHeight() / 8))
 fallingX = Random(0, GetVirtualWidth() - GetSpriteWidth(2))
-fallingY = 0
+fallingY = 50
 SetSpritePosition(2, fallingX, fallingY)
 fallingSPD = 5
 return
@@ -102,7 +102,7 @@ fallingY = fallingY + fallingSPD
 if fallingY > GetVirtualHeight()
 	SetSpriteSize(2, Random(GetVirtualWidth() / 32, GetVirtualWidth() / 4), Random(GetVirtualHeight() / 16, GetVirtualHeight() / 8))
 	fallingX = Random(0, GetVirtualWidth() - GetSpriteWidth(2))
-	fallingY = 0
+	fallingY = 50
 	if fallingSPD < 50 // Speed is capped 
 		fallingSPD = fallingSPD + 2
 	endif
@@ -131,16 +131,7 @@ return
 gameoverScreen:
 
 while gameover = 1
-	// reposition player
-	playerX = GetVirtualWidth()/2 - GetSpriteWidth(1)/2
-	SetSpritePosition(1, playerX, playerY)
-	// falling block off screen
-	fallingY = GetVirtualHeight()
-	SetSpritePosition(2, fallingX, fallingY)
-	Print("Game Over")
-	Printc("Your final score: ")
-	Print(score)
-	Print("Play again? Y/N")
+	// Input
 	if GetRawKeyPressed(89) = 1 // 'y' key
 		gameover = 0
 		fallingSPD = 5
@@ -149,6 +140,18 @@ while gameover = 1
 	if GetRawKeyPressed(78) = 1 // 'n' key
 		end
 	endif
+	// Process
+	// reposition player
+	playerX = GetVirtualWidth()/2 - GetSpriteWidth(1)/2
+	SetSpritePosition(1, playerX, playerY)
+	// falling block off screen
+	fallingY = GetVirtualHeight()
+	SetSpritePosition(2, fallingX, fallingY)
+	// Output
+	Print("Game Over")
+	Printc("Your final score: ")
+	Print(score)
+	Print("Play again? Y/N")
 	
 	Sync()
 endwhile
@@ -158,18 +161,21 @@ return
 startScreen:
 
 while start = 1
-	Print("Simple Runner")
-	Print("Press ENTER to begin")
-	Print("Press ESC to quit")
-	Print("Use A and D to move player")
-	SetSpritePosition(2, GetVirtualWidth(), GetVirtualHeight())
+	// Input
 	if GetRawKeyPressed(13) = 1 // 'ENTER'
 		start = 0
 	endif
 	if GetRawKeyPressed(27) = 1 // 'ESC'
 		end
 	endif
-	
+	// Processing
+	SetSpritePosition(2, GetVirtualWidth(), GetVirtualHeight())
+	// Output
+	Print("Simple Runner")
+	Print("Press ENTER to begin")
+	Print("Press ESC to quit")
+	Print("Use A and D to move player")
+
 	Sync()
 endwhile
 
